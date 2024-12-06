@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chris Ha</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 20px auto;
+      max-width: 800px;
+      background-color: #f7f7f7;
+      color: #333;
+      line-height: 1.8;
+      padding: 0 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #37474f;
+      margin-bottom: 10px;
+      font-size: 2.5em;
+      font-weight: bold;
+    }
+
+    p {
+      text-align: center;
+      color: #555;
+      margin-bottom: 20px;
+    }
+
+    button {
+      padding: 12px 24px;
+      margin: 10px 5px;
+      background-color: #1565c0;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0d47a1;
+    }
+
+    .output {
+      margin: 20px 0;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background-color: #fff;
+      color: #333;
+      font-size: 16px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      min-height: 80px;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    small {
+      display: block;
+      margin-top: 5px;
+      color: #666;
+      font-style: italic;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    a {
+      text-decoration: none;
+      padding: 12px 24px;
+      margin: 10px 5px;
+      background-color: #1565c0;
+      color: white;
+      border-radius: 5px;
+      font-size: 16px;
+      text-align: center;
+      transition: background-color 0.3s ease;
+    }
+
+    a:hover {
+      background-color: #0d47a1;
+    }
+  </style>
+</head>
+<body>
+  <h1>Chris Ha</h1>
+  <p>Write a review for Chris or use the button below to generate one. Click "Copy to Clipboard" to save the generated review, then paste it where needed. Use the link below to leave a review on Yelp. Thank you!</p>
+  <div class="container">
+    <button onclick="generateReview()">Generate a Review</button>
+    <button onclick="copyToClipboard()">Copy to Clipboard</button>
+    <div id="reviewOutput" class="output">Your review will appear here.</div>
+    <a href="https://www.yelp.com/writeareview/biz/WdshnXVjeZq-MvVofMzuTA?review_origin=mobile-site-biz-details-review-feed-war-widget" target="_blank">
+      Leave a Yelp Review
+    </a>
+  </div>
+
+  <script>
+    const openers = [
+      "Chris Ha greeted us with such warmth and positivity, starting our evening perfectly.",
+      "From the very beginning, Chris Ha's energy and enthusiasm made us feel special.",
+      "Walking into Chubby Cattle, Chris Ha's professionalism was evident right away.",
+      "Chris Ha went above and beyond to welcome us and ensure we had a comfortable start.",
+      "Right from the start, Chris Ha's exceptional service stood out.",
+      "Our evening began with a big smile from Chris Ha, and it only got better from there.",
+      "Chris Ha's attention to detail was noticeable as soon as we arrived.",
+      "We felt immediately at ease thanks to the warm welcome from Chris Ha.",
+      "Chris Ha set a welcoming tone for our meal with his genuine kindness.",
+      "The friendly service from Chris Ha was evident from the moment we sat down."
+    ];
+
+    const descriptions = [
+      "Chris's recommendations for our meal were spot on, ensuring we enjoyed every bite.",
+      "The wagyu options were incredible, and Chris's advice made them even better.",
+      "Thanks to Chris, the meal felt like a well-curated experience of flavor and quality.",
+      "Chris's careful attention to our needs elevated the entire evening.",
+      "The service was impeccable, with Chris ensuring every detail was perfect.",
+      "Chris's expertise made pairing meats and sides a truly enjoyable process.",
+      "We appreciated Chris's thoughtful suggestions for sauces that complemented each dish.",
+      "Chris explained everything clearly, making the experience easy and fun.",
+      "Chris took extra care to check on our table and provide helpful recommendations.",
+      "Every step of the meal was enhanced by Chris's attentive and cheerful service."
+    ];
+
+    const specifics = [
+      "Chris suggested pairing the wagyu with Kuroshi Omaichi sake, which was delightful.",
+      "The Soju Rita recommendation from Chris was refreshing and perfectly balanced.",
+      "Chris explained the origins of the A5 wagyu cuts, adding depth to our dining experience.",
+      "The Heaven 12 sake Chris recommended was the perfect match for our meal.",
+      "We loved the unique flavors of the sauces Chris helped us choose.",
+      "The dessert options Chris suggested were a sweet and satisfying conclusion.",
+      "The fresh wasabi that Chris recommended for the wagyu was a highlight of the meal."
+    ];
+
+    const closers = [
+      "This meal was unforgettable, and we look forward to returning.",
+      "Thanks to Chris Ha, our dining experience was truly exceptional.",
+      "We highly recommend asking for Chris Ha for an amazing time.",
+      "We cannot wait to return and enjoy this fantastic service again.",
+      "The combination of great food and Chris's stellar service makes this a must-visit."
+    ];
+
+    const generatedReviews = new Set();
+
+    function generateReview() {
+      let review;
+
+      do {
+        const opener = openers[Math.floor(Math.random() * openers.length)];
+        const description = descriptions[Math.floor(Math.random() * descriptions.length)];
+        const specific = specifics[Math.floor(Math.random() * specifics.length)];
+        const closer = closers[Math.floor(Math.random() * closers.length)];
+        review = `${opener} ${description} ${specific} ${closer}`;
+      } while (generatedReviews.has(review));
+
+      generatedReviews.add(review);
+
+      const outputDiv = document.getElementById("reviewOutput");
+      outputDiv.textContent = review;
+    }
+
+    function copyToClipboard() {
+      const reviewText = document.getElementById("reviewOutput").textContent;
+      if (reviewText && reviewText !== "Your review will appear here.") {
+        navigator.clipboard.writeText(reviewText).then(() => {
+          alert("Review copied to clipboard!");
+        }).catch(err => {
+          console.error("Failed to copy: ", err);
+        });
+      } else {
+        alert("No review to copy! Generate a review first.");
+      }
+    }
+  </script>
+</body>
+</html>
